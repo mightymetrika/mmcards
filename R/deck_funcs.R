@@ -1,3 +1,29 @@
+#' Generate a Standard Deck of Playing Cards
+#'
+#' This function creates a standard deck of playing cards represented as a data
+#' frame. The deck includes suits, ranks, and optional values for each card.
+#'
+#' @param suits A character vector specifying the suits in the deck. Default is
+#' c('C', 'D', 'H', 'S') for Clubs, Diamonds, Hearts, and Spades.
+#' @param ranks A character vector specifying the ranks in the deck. Default is
+#' c('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A') for ranks
+#' 2 to Ace.
+#' @param values A numeric vector specifying the values assigned to each card in
+#' the deck. Default is a sequence from 2 to 14.75 incremented by 0.25.
+#'
+#' @return A data frame representing the deck of cards. The data frame has four
+#' columns: `rank`, `suit`, `card`, and `value`. The data frame also has class
+#' attributes "deck" and "data.frame".
+#'
+#' @examples
+#' deck <- standard_deck()
+#' head(deck)
+#' tail(deck)
+#'
+#' custom_deck <- standard_deck(values = seq(1, 13))
+#' head(custom_deck)
+#'
+#' @export
 standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
                           ranks = c('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'),
                           values = seq(2, 14.75, by = 0.25)){
@@ -20,13 +46,59 @@ standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
   deck$card <- factor(deck$card, levels = deck$card)
 
   #Set class
-  class(deck) <- c("data.frame", "deck")
+  class(deck) <- c("deck", "data.frame")
 
   return(deck)
 }
 
 
-shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed,
+#' Shuffle a Deck of Cards
+#'
+#' This function shuffles a deck of cards and returns the shuffled deck.
+#' The function can handle standard decks, anonymous decks, and interleaved decks.
+#' For interleaved decks, an option to pair shuffle is also available.
+#'
+#' @param deck_of_cards An anonymous function that returns a deck of cards as
+#' either a data frame or a list of two numeric vectors for interleaved decks.
+#' Default is `function(x){standard_deck()}`.
+#' @param seed An optional seed for reproducibility. Default is NULL.
+#' @param paired Logical flag to indicate if the interleaved deck should be pair
+#' shuffled. Default is FALSE.
+#'
+#' @return A data frame representing the shuffled deck of cards. The data frame
+#' inherits various classes based on its type. All shuffled decks will have the
+#' classes "shuffled deck" and "data.frame". Additional class inheritance depends
+#' on the `deck_of_cards` parameter:
+#' - "deck" if `deck_of_cards` returns a standard deck (default)
+#' - "anonymous deck" if `deck_of_cards` returns a single vector
+#' - "interleaved deck" if `deck_of_cards` returns a list of two vectors.
+#' If the `paired` parameter is set to TRUE, an interleaved deck will also
+#' inherit the class "paired deck".
+#'
+#' @examples
+#' # Standard deck
+#' std_deck <- shuffle_deck()
+#' head(std_deck)
+#'
+#' # Anonymous deck
+#' anon_deck <- shuffle_deck(deck_of_cards = function(x){runif(52, 1, 10)})
+#' head(anon_deck)
+#'
+#' # Interleaved deck
+#' interleaved_deck <- shuffle_deck(
+#'                         deck_of_cards = function(x){list(runif(26, 1, 5),
+#'                                                          runif(26, 6, 10))})
+#' head(interleaved_deck)
+#'
+#' # Paired interleaved deck
+#' paired_deck <- shuffle_deck(
+#'                   deck_of_cards = function(x){list(runif(26, 1, 5),
+#'                                                    runif(26, 6, 10))},
+#'                   paired = TRUE)
+#' head(paired_deck)
+#'
+#' @export
+shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NULL,
                          paired = FALSE) {
 
   # Set seed for reproducibility
@@ -63,7 +135,12 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed,
     # Interleave the decks
     interleaved_deck <- rbind(A_deck, B_deck)[order(rep(1:nrow(A_deck), 2)), ]
 
-    class(interleaved_deck) <- c("data.frame", "shuffled deck", "interleaved deck")
+    # Add classes and return deck
+    class(interleaved_deck) <- c("interleaved deck", "shuffled deck", "data.frame")
+    if (paired == TRUE){
+      class(interleaved_deck) <- append("paired deck", class(interleaved_deck))
+    }
+
     return(interleaved_deck)
 
     } else if (!inherits(decks, "deck")) {
@@ -75,19 +152,49 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed,
 
       # Shuffle the ordered deck
       shuffled_deck <- ordered_deck[sample(nrow(ordered_deck)), ]
-      class(shuffled_deck) <- c("data.frame", "shuffled deck", "anonymous deck")
+
+      # Add classes and return deck
+      class(shuffled_deck) <- c("anonymous deck", "shuffled deck", "data.frame")
       return(shuffled_deck)
 
       } else {
 
         # Shuffle the provided deck
         shuffled_deck <- decks[sample(nrow(decks)), ]
-        class(shuffled_deck) <- c("data.frame", "shuffled deck", "deck")
+
+        # Add classes and return deck
+        class(shuffled_deck) <- c("deck", "shuffled deck", "data.frame")
         return(shuffled_deck)
       }
 }
 
-
+#' Deal a Card from the Deck
+#'
+#' This function deals the top card from a given deck and returns the dealt card
+#' along with the updated deck.
+#'
+#' @param current_deck A data frame representing the current deck of cards. This
+#' can either be a standard deck, an anonymous deck, or an interleaved deck.
+#' The function also accepts an object of class "up_deck" which contains an
+#' updated deck and the last dealt card.
+#'
+#' @return A list containing two elements: `dealt_card`, a data frame representing
+#' the card that was dealt, and `updated_deck`, a data frame representing the
+#' remaining cards in the deck. The list has the class attribute "up_deck".
+#'
+#' @examples
+#' # Using a standard deck
+#' std_deck <- standard_deck()
+#' result <- deal_card(std_deck)
+#' result$dealt_card
+#' result$updated_deck
+#'
+#' # Using an "up_deck" object
+#' result2 <- deal_card(result)
+#' result2$dealt_card
+#' result2$updated_deck
+#'
+#' @export
 deal_card <- function(current_deck) {
 
   if (!inherits(current_deck, "up_deck")){
