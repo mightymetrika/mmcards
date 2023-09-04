@@ -142,4 +142,5 @@ library(shiny)
 
     # Run the app
     shinyApp(ui, server)
+    
 ```
