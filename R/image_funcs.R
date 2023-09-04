@@ -41,8 +41,22 @@ i_deck <- function(deck,
                     i_names = vector_playing_cards,
                     i_type = "png"){
 
+  # Check if the input deck inherits from "StandardDeck" or "ShuffledDeck"
+  if (!inherits(deck, c("StandardDeck", "ShuffledDeck"))) {
+    stop("The 'deck' must inherit from 'StandardDeck' or 'ShuffledDeck'.")
+  }
+
+  # Check if 'cards' and 'i_names' have the same length
+  if (length(cards) != length(i_names)) {
+    stop("The vectors 'cards' and 'i_names' must have the same length.")
+  }
+
+  # Check if each value in 'cards' can be found in the 'card' column of 'deck'
+  if (!all(cards %in% deck$card)) {
+    stop("All values in 'cards' must correspond to a card in the 'deck'.")
+  }
+
   # Get folder with images
-  #image_paths <- paste0(i_path, "/", i_names, ".", i_type)
   image_paths <- file.path(i_path, paste0(i_names, ".", i_type))
 
   # Create image data frame

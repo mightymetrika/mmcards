@@ -1,7 +1,7 @@
 #' Generate a Standard Deck of Playing Cards
 #'
 #' This function creates a standard deck of playing cards represented as a data
-#' frame. The deck includes suits, ranks, and optional values for each card.
+#' frame. The deck includes suits, ranks, and values for each card.
 #'
 #' @param suits A character vector specifying the suits in the deck. Default is
 #' c('C', 'D', 'H', 'S') for Clubs, Diamonds, Hearts, and Spades.
@@ -20,21 +20,43 @@
 #' head(deck)
 #' tail(deck)
 #'
-#' custom_deck <- standard_deck(values = seq(1, 13))
-#' head(custom_deck)
-#'
 #' @export
 standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
                           ranks = c('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'),
                           values = seq(2, 14.75, by = 0.25)){
+
+  # Check if suits and ranks are character vectors
+  if (!is.character(suits)) {
+    stop("The 'suits' argument must be a character vector.")
+  }
+
+  if (!is.character(ranks)) {
+    stop("The 'ranks' argument must be a character vector.")
+  }
+
+  # Check if the length of suits is 4
+  if (length(suits) != 4) {
+    stop("The 'suits' argument must have a length of 4.")
+  }
+
+  # Check if values is a numeric vector
+  if (!is.numeric(values)) {
+    stop("The 'values' argument must be a numeric vector.")
+  }
+
+  # Check if the length of values matches the number of cards in the deck
+  if (length(values) != length(suits) * length(ranks)) {
+    stop("The length of the 'values' argument must match the number of cards in the deck (length of 'suits' * length of 'ranks').")
+  }
+
   # Create the deck
   deck <- expand.grid(rank = ranks, suit = suits)
   deck$card <- paste0(deck$rank, deck$suit)
 
   # Turn suit to factor
   deck$suit <- factor(deck$suit,
-                      levels = c("C", "D", "H", "S"),
-                      labels = c("C", "D", "H", "S"))
+                      levels = suits,
+                      labels = suits)
 
   # Order deck
   deck <- deck[order(deck$rank, deck$suit), ]
@@ -101,6 +123,16 @@ standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
 shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NULL,
                          paired = FALSE) {
 
+  # Check if 'seed' is a valid single integer
+  if (!is.null(seed) && (!is.numeric(seed) || length(seed) != 1)) {
+    stop("The 'seed' parameter must be a single integer.")
+  }
+
+  # Check if 'paired' is a logical value
+  if (!is.logical(paired) || length(paired) != 1) {
+    stop("The 'paired' parameter must be a single logical value.")
+  }
+
   # Set seed for reproducibility
   if (!is.null(seed)) {
     set.seed(seed)
@@ -108,6 +140,14 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
 
   # Generate the values based on the anonymous function
   decks <- deck_of_cards(NULL)
+
+  # Check if the result from 'deck_of_cards' is valid
+  if (!(inherits(decks, "StandardDeck") ||
+        (is.numeric(decks) && is.vector(decks)) ||
+        (is.list(decks) && length(decks) == 2 &&
+         is.numeric(decks[[1]]) && is.numeric(decks[[2]])))) {
+    stop("The 'deck_of_cards' function must return either a 'StandardDeck', a numeric vector, or a list of two numeric vectors.")
+  }
 
   # If the result is a list with two elements, treat them as separate decks
   if (is.list(decks) && length(decks) == 2) {
@@ -196,6 +236,12 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
 #'
 #' @export
 deal_card <- function(current_deck) {
+
+  # Check if 'current_deck' inherits from one of the expected classes
+  if (!inherits(current_deck, c("StandardDeck", "ShuffledDeck", "UpDeck"))) {
+    stop("The 'current_deck' must inherit from 'StandardDeck', 'ShuffledDeck', or 'UpDeck'.")
+  }
+
 
   if (!inherits(current_deck, "UpDeck")){
 

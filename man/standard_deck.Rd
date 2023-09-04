@@ -28,14 +28,11 @@ attributes "StandardDeck" and "data.frame".
 }
 \description{
 This function creates a standard deck of playing cards represented as a data
-frame. The deck includes suits, ranks, and optional values for each card.
+frame. The deck includes suits, ranks, and values for each card.
 }
 \examples{
 deck <- standard_deck()
 head(deck)
 tail(deck)
-
-custom_deck <- standard_deck(values = seq(1, 13))
-head(custom_deck)
 
 }
