@@ -42,7 +42,8 @@ i_deck <- function(deck,
                     i_type = "png"){
 
   # Get folder with images
-  image_paths <- paste0(i_path, "/", i_names, ".", i_type)
+  #image_paths <- paste0(i_path, "/", i_names, ".", i_type)
+  image_paths <- file.path(i_path, paste0(i_names, ".", i_type))
 
   # Create image data frame
   image_frame <- data.frame(card = cards,

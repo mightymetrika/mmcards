@@ -9,7 +9,7 @@ deal_card(current_deck)
 \arguments{
 \item{current_deck}{A data frame representing the current deck of cards. This
 can either be a standard deck, an anonymous deck, or an interleaved deck.
-The function also accepts an object of class "up_deck" which contains an
+The function also accepts an object of class "UpDeck" which contains an
 updated deck and the last dealt card.}
 }
 \value{
