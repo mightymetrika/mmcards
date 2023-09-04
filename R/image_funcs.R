@@ -17,7 +17,7 @@
 #' @param i_type The file extension of the image files (e.g., "png", "jpg").
 #'
 #' @return A data frame that includes the original deck along with image paths for
-#' each card. Inherits the class "ideck" in addition to the original deck's classes.
+#' each card. Inherits the class "ImgDeck" in addition to the original deck's classes.
 #'
 #' @examples
 #' \dontrun{
@@ -42,7 +42,8 @@ i_deck <- function(deck,
                     i_type = "png"){
 
   # Get folder with images
-  image_paths <- paste0(i_path, "/", i_names, ".", i_type)
+  #image_paths <- paste0(i_path, "/", i_names, ".", i_type)
+  image_paths <- file.path(i_path, paste0(i_names, ".", i_type))
 
   # Create image data frame
   image_frame <- data.frame(card = cards,
@@ -57,7 +58,7 @@ i_deck <- function(deck,
   ideck <- ideck[match(deck$card, ideck$card),]
 
   #Add class "ideck"
-  class(ideck) <- append("ideck", deck_classes)
+  class(ideck) <- append("ImgDeck", deck_classes)
 
   # Return
   return(ideck)

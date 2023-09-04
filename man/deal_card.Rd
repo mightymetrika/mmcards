@@ -9,13 +9,13 @@ deal_card(current_deck)
 \arguments{
 \item{current_deck}{A data frame representing the current deck of cards. This
 can either be a standard deck, an anonymous deck, or an interleaved deck.
-The function also accepts an object of class "up_deck" which contains an
+The function also accepts an object of class "UpDeck" which contains an
 updated deck and the last dealt card.}
 }
 \value{
 A list containing two elements: \code{dealt_card}, a data frame representing
 the card that was dealt, and \code{updated_deck}, a data frame representing the
-remaining cards in the deck. The list has the class attribute "up_deck".
+remaining cards in the deck. The list has the class attribute "UpDeck".
 }
 \description{
 This function deals the top card from a given deck and returns the dealt card
