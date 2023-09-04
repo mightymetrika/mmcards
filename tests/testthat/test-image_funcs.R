@@ -4,7 +4,7 @@
 #                 i_path = paste0(gsub("mmcards", "", getwd()),
 #                                 "PNG-cards-1.3/PNG-cards-1.3"))
 #
-#   expect_s3_class(ic, "ideck")
+#   expect_s3_class(ic, "ImgDeck")
 #   expect_equal(2 * 2, 4)
 # })
 #

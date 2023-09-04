@@ -13,7 +13,7 @@
 #'
 #' @return A data frame representing the deck of cards. The data frame has four
 #' columns: `rank`, `suit`, `card`, and `value`. The data frame also has class
-#' attributes "deck" and "data.frame".
+#' attributes "StandardDeck" and "data.frame".
 #'
 #' @examples
 #' deck <- standard_deck()
@@ -46,7 +46,7 @@ standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
   deck$card <- factor(deck$card, levels = deck$card)
 
   #Set class
-  class(deck) <- c("deck", "data.frame")
+  class(deck) <- c("StandardDeck", "data.frame")
 
   return(deck)
 }
@@ -67,13 +67,13 @@ standard_deck <- function(suits = c('C', 'D', 'H', 'S'),
 #'
 #' @return A data frame representing the shuffled deck of cards. The data frame
 #' inherits various classes based on its type. All shuffled decks will have the
-#' classes "shuffled deck" and "data.frame". Additional class inheritance depends
+#' classes "ShuffledDeck" and "data.frame". Additional class inheritance depends
 #' on the `deck_of_cards` parameter:
-#' - "deck" if `deck_of_cards` returns a standard deck (default)
-#' - "anonymous deck" if `deck_of_cards` returns a single vector
-#' - "interleaved deck" if `deck_of_cards` returns a list of two vectors.
+#' - "StandardDeck" if `deck_of_cards` returns a standard deck (default)
+#' - "AnonymousDeck" if `deck_of_cards` returns a single vector
+#' - "InterleavedDeck" if `deck_of_cards` returns a list of two vectors.
 #' If the `paired` parameter is set to TRUE, an interleaved deck will also
-#' inherit the class "paired deck".
+#' inherit the class "PairedDeck".
 #'
 #' @examples
 #' # Standard deck
@@ -136,14 +136,14 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
     interleaved_deck <- rbind(A_deck, B_deck)[order(rep(1:nrow(A_deck), 2)), ]
 
     # Add classes and return deck
-    class(interleaved_deck) <- c("interleaved deck", "shuffled deck", "data.frame")
+    class(interleaved_deck) <- c("InterleavedDeck", "ShuffledDeck", "data.frame")
     if (paired == TRUE){
-      class(interleaved_deck) <- append("paired deck", class(interleaved_deck))
+      class(interleaved_deck) <- append("PairedDeck", class(interleaved_deck))
     }
 
     return(interleaved_deck)
 
-    } else if (!inherits(decks, "deck")) {
+    } else if (!inherits(decks, "StandardDeck")) {
 
       # If it's just one deck, treat it as before
       values <- decks
@@ -154,7 +154,7 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
       shuffled_deck <- ordered_deck[sample(nrow(ordered_deck)), ]
 
       # Add classes and return deck
-      class(shuffled_deck) <- c("anonymous deck", "shuffled deck", "data.frame")
+      class(shuffled_deck) <- c("AnonymousDeck", "ShuffledDeck", "data.frame")
       return(shuffled_deck)
 
       } else {
@@ -163,7 +163,7 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
         shuffled_deck <- decks[sample(nrow(decks)), ]
 
         # Add classes and return deck
-        class(shuffled_deck) <- c("deck", "shuffled deck", "data.frame")
+        class(shuffled_deck) <- c("StandardDeck", "ShuffledDeck", "data.frame")
         return(shuffled_deck)
       }
 }
@@ -180,7 +180,7 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
 #'
 #' @return A list containing two elements: `dealt_card`, a data frame representing
 #' the card that was dealt, and `updated_deck`, a data frame representing the
-#' remaining cards in the deck. The list has the class attribute "up_deck".
+#' remaining cards in the deck. The list has the class attribute "UpDeck".
 #'
 #' @examples
 #' # Using a standard deck
@@ -197,7 +197,7 @@ shuffle_deck <- function(deck_of_cards = function(x){standard_deck()}, seed = NU
 #' @export
 deal_card <- function(current_deck) {
 
-  if (!inherits(current_deck, "up_deck")){
+  if (!inherits(current_deck, "UpDeck")){
 
     if (nrow(current_deck) == 0) {
       stop("No more cards in the deck!")
@@ -218,7 +218,7 @@ deal_card <- function(current_deck) {
   }
 
   up_deck <- list(dealt_card = card_to_deal, updated_deck = updated_deck)
-  class(up_deck) <- "up_deck"
+  class(up_deck) <- "UpDeck"
 
   return(up_deck)
 }

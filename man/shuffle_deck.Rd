@@ -25,14 +25,14 @@ shuffled. Default is FALSE.}
 \value{
 A data frame representing the shuffled deck of cards. The data frame
 inherits various classes based on its type. All shuffled decks will have the
-classes "shuffled deck" and "data.frame". Additional class inheritance depends
+classes "ShuffledDeck" and "data.frame". Additional class inheritance depends
 on the \code{deck_of_cards} parameter:
 \itemize{
-\item "deck" if \code{deck_of_cards} returns a standard deck (default)
-\item "anonymous deck" if \code{deck_of_cards} returns a single vector
-\item "interleaved deck" if \code{deck_of_cards} returns a list of two vectors.
+\item "StandardDeck" if \code{deck_of_cards} returns a standard deck (default)
+\item "AnonymousDeck" if \code{deck_of_cards} returns a single vector
+\item "InterleavedDeck" if \code{deck_of_cards} returns a list of two vectors.
 If the \code{paired} parameter is set to TRUE, an interleaved deck will also
-inherit the class "paired deck".
+inherit the class "PairedDeck".
 }
 }
 \description{

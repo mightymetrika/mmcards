@@ -33,7 +33,7 @@ vector.}
 }
 \value{
 A data frame that includes the original deck along with image paths for
-each card. Inherits the class "ideck" in addition to the original deck's classes.
+each card. Inherits the class "ImgDeck" in addition to the original deck's classes.
 }
 \description{
 This function takes a deck of cards and adds image paths to each card.

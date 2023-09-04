@@ -24,7 +24,7 @@ the deck. Default is a sequence from 2 to 14.75 incremented by 0.25.}
 \value{
 A data frame representing the deck of cards. The data frame has four
 columns: \code{rank}, \code{suit}, \code{card}, and \code{value}. The data frame also has class
-attributes "deck" and "data.frame".
+attributes "StandardDeck" and "data.frame".
 }
 \description{
 This function creates a standard deck of playing cards represented as a data

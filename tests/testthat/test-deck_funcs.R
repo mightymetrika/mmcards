@@ -3,7 +3,7 @@ test_that("standard_deck works with defaults", {
 
   expect_equal(nrow(deck), 52)
   expect_s3_class(deck, "data.frame")
-  expect_s3_class(deck, "deck")
+  expect_s3_class(deck, "StandardDeck")
 })
 
 test_that("shuffle_deck works with standard_deck", {
@@ -13,8 +13,8 @@ test_that("shuffle_deck works with standard_deck", {
   # Test expectations
   expect_equal(nrow(sdeck), 52)
   expect_s3_class(sdeck, "data.frame")
-  expect_s3_class(sdeck, "shuffled deck")
-  expect_s3_class(sdeck, "deck")
+  expect_s3_class(sdeck, "ShuffledDeck")
+  expect_s3_class(sdeck, "StandardDeck")
 })
 
 test_that("shuffle_deck works with anonymous function", {
@@ -26,8 +26,8 @@ test_that("shuffle_deck works with anonymous function", {
   # Test expectations
   expect_equal(nrow(sdeck), 52)
   expect_s3_class(sdeck, "data.frame")
-  expect_s3_class(sdeck, "shuffled deck")
-  expect_s3_class(sdeck, "anonymous deck")
+  expect_s3_class(sdeck, "ShuffledDeck")
+  expect_s3_class(sdeck, "AnonymousDeck")
 })
 
 test_that("shuffle_deck works for interleaved decks", {
@@ -40,8 +40,8 @@ test_that("shuffle_deck works for interleaved decks", {
   # Test expectations
   expect_equal(nrow(sdeck), 52)
   expect_s3_class(sdeck, "data.frame")
-  expect_s3_class(sdeck, "shuffled deck")
-  expect_s3_class(sdeck, "interleaved deck")
+  expect_s3_class(sdeck, "ShuffledDeck")
+  expect_s3_class(sdeck, "InterleavedDeck")
 })
 
 test_that("shuffle_deck works for interleaved decks with paired = TRUE", {
@@ -55,8 +55,8 @@ test_that("shuffle_deck works for interleaved decks with paired = TRUE", {
   # Test expectations
   expect_equal(nrow(sdeck), 52)
   expect_s3_class(sdeck, "data.frame")
-  expect_s3_class(sdeck, "shuffled deck")
-  expect_s3_class(sdeck, "interleaved deck")
+  expect_s3_class(sdeck, "ShuffledDeck")
+  expect_s3_class(sdeck, "InterleavedDeck")
 
   # Test that pairing worked
   expect_equal(sdeck$value[[1]],sdeck$value[[2]])
@@ -78,7 +78,7 @@ test_that("deal_card works with standard deck", {
   # Test expectations
   expect_equal(nrow(udeck$dealt_card), 1)
   expect_equal(nrow(udeck$updated_deck), 51)
-  expect_s3_class(udeck, "up_deck")
+  expect_s3_class(udeck, "UpDeck")
 
   # Deal second card
   udeck <- deal_card(udeck$updated_deck)
@@ -86,7 +86,7 @@ test_that("deal_card works with standard deck", {
   # Test expectations
   expect_equal(nrow(udeck$dealt_card), 1)
   expect_equal(nrow(udeck$updated_deck), 50)
-  expect_s3_class(udeck, "up_deck")
+  expect_s3_class(udeck, "UpDeck")
 
 })
 
@@ -104,7 +104,7 @@ test_that("deal_card works with standard deck and up_deck class", {
   # Test expectations
   expect_equal(nrow(udeck$dealt_card), 1)
   expect_equal(nrow(udeck$updated_deck), 50)
-  expect_s3_class(udeck, "up_deck")
+  expect_s3_class(udeck, "UpDeck")
 
 })
 
