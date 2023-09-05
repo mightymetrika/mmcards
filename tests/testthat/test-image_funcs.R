@@ -1,3 +1,13 @@
+test_that("i_deck adds images to a deck of cards", {
+
+  ic <- i_deck(deck = standard_deck(),
+               i_path = getwd())
+
+  expect_s3_class(ic, "ImgDeck")
+  expect_s3_class(ic, "StandardDeck")
+
+})
+
 # test_that("i_deck adds images to a deck of cards", {
 #
 #   ic <- i_deck(deck = standard_deck(),

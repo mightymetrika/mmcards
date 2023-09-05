@@ -20,11 +20,17 @@
 #' each card. Inherits the class "ImgDeck" in addition to the original deck's classes.
 #'
 #' @examples
-#' \dontrun{
-#'   image_deck <- i_deck(deck = standard_deck(),
-#'                        i_path = paste0(gsub("mmcards", "", getwd()),
-#'                                             "PNG-cards-1.3/PNG-cards-1.3"))
-#' }
+#' #The following example shows how to add image paths to the 'mmcards' default
+#' #StandardDeck when the images referenced in ?vector_playing_cards are stored
+#' #in the working directory.
+#'
+#'  image_deck <- i_deck(deck = standard_deck(),
+#'                       i_path = getwd())
+#'
+#'  head(image_deck)
+#'
+#'  #See the README for an example of how to use i_deck to incorporate images
+#'  #into a 'shiny' application.
 #'
 #' @export
 i_deck <- function(deck,
