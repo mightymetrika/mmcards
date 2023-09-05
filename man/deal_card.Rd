@@ -28,7 +28,7 @@ result <- deal_card(std_deck)
 result$dealt_card
 result$updated_deck
 
-# Using an "up_deck" object
+# Using an "UpDeck" object
 result2 <- deal_card(result)
 result2$dealt_card
 result2$updated_deck

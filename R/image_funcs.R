@@ -26,8 +26,6 @@
 #'                                             "PNG-cards-1.3/PNG-cards-1.3"))
 #' }
 #'
-#' @seealso \code{\link{standard_deck}}, \code{\link{shuffle_deck}}, \code{\link{deal_card}}
-#'
 #' @export
 i_deck <- function(deck,
                     i_path,

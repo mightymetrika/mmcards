@@ -49,6 +49,3 @@ allows for customization of image paths.
 }
 
 }
-\seealso{
-\code{\link{standard_deck}}, \code{\link{shuffle_deck}}, \code{\link{deal_card}}
-}

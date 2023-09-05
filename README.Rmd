@@ -20,6 +20,13 @@ Games of chance serve as essential learning tools for understanding probability 
 
 ## Installation
 
+You can install the released version of 'mmcards' from [CRAN](https://CRAN.R-project.org):
+
+```{r eval=FALSE}
+install.packages("mmcards")
+```
+
+
 To install the development version of 'mmcards', you can use the [devtools](https://devtools.r-lib.org/) package:
 
 ```{r, eval=FALSE}

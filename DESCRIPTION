@@ -14,15 +14,14 @@ Description: Early insights in probability theory were largely influenced by
     aid in the creation, manipulation, and utilization of playing card decks in
     multiple formats. These include a standard 52-card deck, as well as
     alternative decks such as decks defined by custom anonymous functions and
-    custom interleaved decks that can be pair shuffled. Optimized for the
-    development of educational 'shiny' applications, the package is particularly
-    useful for teaching statistics and probability through card-based games.
-    Functions include shuffle_deck(), which creates either a shuffled standard
-    deck or a shuffled custom alternative deck; deal_card(), which takes a deck
-    and returns a list object containing both the dealt card and the updated deck;
-    and i_deck(), which adds image paths to card objects, further enriching the
-    package's utility in the development of interactive 'shiny' application card
-    games.
+    custom interleaved decks. Optimized for the development of educational
+    'shiny' applications, the package is particularly useful for teaching
+    statistics and probability through card-based games. Functions include
+    shuffle_deck(), which creates either a shuffled standard deck or a shuffled
+    custom alternative deck; deal_card(), which takes a deck and returns a list
+    object containing both the dealt card and the updated deck; and i_deck(),
+    which adds image paths to card objects, further enriching the package's
+    utility in the development of interactive 'shiny' application card games.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

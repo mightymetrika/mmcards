@@ -11,6 +11,13 @@ to games of chance.
 
 ## Installation
 
+You can install the released version of ‘mmcards’ from
+[CRAN](https://CRAN.R-project.org):
+
+``` r
+install.packages("mmcards")
+```
+
 To install the development version of ‘mmcards’, you can use the
 [devtools](https://devtools.r-lib.org/) package:
 
