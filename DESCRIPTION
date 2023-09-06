@@ -1,6 +1,6 @@
 Package: mmcards
 Title: Playing Cards Utility Functions
-Version: 0.1.1
+Version: 0.1.1.9000
 Authors@R: c(
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre")),
     person("mightymetrika, LLC", role = c("cph", "fnd"))
